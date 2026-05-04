@@ -1,62 +1,54 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, BookOpen, FileText, MessageCircle } from "lucide-react";
-import { NotesGenerator } from "@/components/study/NotesGenerator";
-import { Summarizer } from "@/components/study/Summarizer";
-import { Chatbot } from "@/components/study/Chatbot";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { GraduationCap, LogOut, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Nexus } from "@/components/study/Nexus";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const nav = useNavigate();
+  const { user, profile, loading, signOut } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !user) nav("/auth", { replace: true });
+  }, [loading, user, nav]);
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-subtle">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container max-w-4xl flex items-center gap-3 py-4">
-          <div className="h-10 w-10 rounded-xl bg-gradient-hero flex items-center justify-center shadow-elegant">
-            <GraduationCap className="h-5 w-5 text-primary-foreground" />
+        <div className="container max-w-4xl flex items-center justify-between gap-3 py-3">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-gradient-hero flex items-center justify-center shadow-elegant">
+              <GraduationCap className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-lg font-semibold">Nexus</h1>
+              <p className="text-xs text-muted-foreground">
+                {profile ? `${profile.full_name} · Class ${profile.class || "—"}` : "Your AI study buddy"}
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-semibold text-foreground">AI Study Assistant+</h1>
-            <p className="text-xs text-muted-foreground">Notes · Summaries · Doubts — powered by AI</p>
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out">
+              <LogOut className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </header>
 
-      <main className="container max-w-4xl py-10">
-        <section className="text-center mb-10 animate-in fade-in-50 slide-in-from-bottom-3">
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3 bg-gradient-hero bg-clip-text text-transparent">
-            Study smarter, not harder
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Generate revision notes, summarize documents, and clear academic doubts — all in one place.
-          </p>
-        </section>
-
-        <Tabs defaultValue="notes" className="w-full">
-          <TabsList className="grid grid-cols-3 w-full mb-6">
-            <TabsTrigger value="notes" className="gap-2">
-              <BookOpen className="h-4 w-4" /> <span className="hidden sm:inline">Notes</span>
-            </TabsTrigger>
-            <TabsTrigger value="summary" className="gap-2">
-              <FileText className="h-4 w-4" /> <span className="hidden sm:inline">Summarize</span>
-            </TabsTrigger>
-            <TabsTrigger value="chat" className="gap-2">
-              <MessageCircle className="h-4 w-4" /> <span className="hidden sm:inline">Doubts</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="notes">
-            <NotesGenerator />
-          </TabsContent>
-          <TabsContent value="summary">
-            <Summarizer />
-          </TabsContent>
-          <TabsContent value="chat">
-            <Chatbot />
-          </TabsContent>
-        </Tabs>
+      <main className="container max-w-4xl py-6">
+        <Nexus profile={profile} />
       </main>
-
-      <footer className="text-center text-xs text-muted-foreground py-6">
-        Built for students · MVP prototype
-      </footer>
     </div>
   );
 };

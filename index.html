@@ -1,20 +1,27 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Study Assistant+ | Notes, Summaries & Doubts</title>
-    <meta name="description" content="AI Study Assistant+ helps students generate revision notes, summarize documents, and clear academic doubts instantly." />
-    <meta name="author" content="AI Study Assistant+" />
+    <title>Nexus — Your AI Study Buddy</title>
+    <meta name="description" content="Nexus is your personal AI study assistant — notes, summaries and doubts in your preferred language." />
+    <meta name="author" content="Nexus" />
 
-    <meta property="og:title" content="AI Study Assistant+" />
-    <meta property="og:description" content="Generate notes, summarize documents, and clear doubts with AI." />
+    <meta property="og:title" content="Nexus — AI Study Assistant" />
+    <meta property="og:description" content="Notes, summaries and doubts in your language — powered by AI." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('nexus-theme') || 'dark';
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) { document.documentElement.classList.add('dark'); }
+      })();
+    </script>
   </head>
 
   <body>
