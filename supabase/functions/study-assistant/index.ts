@@ -3,57 +3,47 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM_PROMPTS: Record<string, string> = {
-  notes: `You are a study notes generator for undergraduate students. Given a topic, return concise, exam-ready study material in clean Markdown with EXACTLY this structure:
+const buildSystem = (language: string, name?: string, klass?: string | null) => `
+You are Nexus, a friendly AI study buddy for students. You help with three things:
+1. Generating short revision notes on any topic.
+2. Summarizing documents the student attaches or pastes.
+3. Solving academic doubts clearly and simply.
 
-## 📘 Short Notes
-- 5 to 6 crisp bullet points (each 1-2 lines, factually accurate)
+Student profile: ${name ? `Name: ${name}.` : ""} ${klass ? `Class/Year: ${klass}.` : ""}
 
-## ❓ Important Questions
-1. Five important exam-style questions (numbered list)
+LANGUAGE RULE (very important):
+- Always reply in: ${language}.
+- If the student writes in another language, still reply in ${language} unless they explicitly ask otherwise.
+- "Hinglish" means casual Hindi written in Roman/English script mixed with English words (like Indian students chat).
+- Keep tone warm, encouraging, and student-friendly.
 
-Keep language simple, clear, and student-friendly.`,
-  summarize: `You are a document summarizer for students. Given the raw text of a document, produce clean Markdown with EXACTLY:
-
-## 📝 Summary
-A concise paragraph (4-6 sentences) capturing the main idea.
-
-## 🔑 Key Points
-- 5 to 7 bullet points listing the most important takeaways.`,
-  chat: `You are a helpful study tutor for undergraduate students. Answer the user's academic doubt clearly and concisely (3-6 sentences). Use simple language, give examples when useful, and format with Markdown if helpful. If the question is unclear, ask one short clarifying question.`,
-};
+FORMAT:
+- Use clean Markdown (headings, bullets, bold) where helpful.
+- For notes: give 5-7 crisp bullets + 3-5 important questions.
+- For summaries: short paragraph + key points list.
+- For doubts: clear explanation with a simple example.
+- Keep answers concise unless asked for depth.
+`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { mode, input, messages } = await req.json();
+    const { messages, language, studentName, studentClass } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
 
-    const system = SYSTEM_PROMPTS[mode];
-    if (!system) {
-      return new Response(JSON.stringify({ error: "Invalid mode" }), {
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "messages required" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    let chatMessages: Array<{ role: string; content: string }>;
-    if (mode === "chat" && Array.isArray(messages)) {
-      chatMessages = [{ role: "system", content: system }, ...messages];
-    } else {
-      const userContent =
-        mode === "notes"
-          ? `Topic: ${input}`
-          : mode === "summarize"
-          ? `Document content:\n\n${input}`
-          : String(input ?? "");
-      chatMessages = [
-        { role: "system", content: system },
-        { role: "user", content: userContent },
-      ];
-    }
+    const lang = typeof language === "string" && language.trim() ? language.trim() : "English";
+    const system = buildSystem(lang, studentName, studentClass);
+
+    const chatMessages = [{ role: "system", content: system }, ...messages];
 
     const resp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -62,7 +52,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.5-flash",
         messages: chatMessages,
       }),
     });
@@ -75,7 +65,7 @@ Deno.serve(async (req) => {
         });
       }
       if (resp.status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add funds to your Lovable workspace." }), {
+        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add funds in Lovable workspace." }), {
           status: 402,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -94,7 +84,7 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.error("study-assistant error:", e);
+    console.error("nexus error:", e);
     return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
