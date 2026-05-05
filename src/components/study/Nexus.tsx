@@ -144,7 +144,7 @@ export const Nexus = ({
             <Sparkles className="h-4 w-4 text-primary-foreground" />
           </div>
           <div>
-            <p className="text-sm font-bold flex items-center gap-1">Nexus <span className="text-xs">💖</span></p>
+            <p className="text-sm font-bold flex items-center gap-1">Nexus <span className="text-xs">😊</span></p>
             <p className="text-xs text-muted-foreground">Your cuddly study buddy</p>
           </div>
         </div>
