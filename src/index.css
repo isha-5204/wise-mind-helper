@@ -8,41 +8,41 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 30% 98%;
-    --foreground: 222 47% 11%;
+    --background: 330 60% 98%;
+    --foreground: 280 30% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 280 30% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 280 30% 18%;
 
-    --primary: 230 75% 56%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 260 80% 70%;
+    --primary: 320 70% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 280 80% 75%;
 
-    --secondary: 220 25% 94%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 280 50% 95%;
+    --secondary-foreground: 280 40% 25%;
 
-    --muted: 220 20% 95%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 320 30% 96%;
+    --muted-foreground: 280 15% 50%;
 
-    --accent: 270 60% 96%;
-    --accent-foreground: 230 75% 40%;
+    --accent: 270 70% 94%;
+    --accent-foreground: 320 70% 45%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 90%;
-    --input: 220 20% 90%;
-    --ring: 230 75% 56%;
+    --border: 320 30% 90%;
+    --input: 320 30% 92%;
+    --ring: 320 70% 65%;
 
-    --radius: 0.85rem;
+    --radius: 1.25rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(230 75% 56%), hsl(260 80% 70%));
-    --gradient-subtle: linear-gradient(180deg, hsl(220 30% 98%), hsl(230 40% 95%));
-    --shadow-elegant: 0 20px 50px -20px hsl(230 75% 56% / 0.25);
-    --shadow-card: 0 4px 20px -4px hsl(230 40% 30% / 0.08);
+    --gradient-hero: linear-gradient(135deg, hsl(320 80% 72%), hsl(270 80% 75%) 50%, hsl(200 85% 75%));
+    --gradient-subtle: linear-gradient(180deg, hsl(330 60% 98%), hsl(280 60% 96%));
+    --shadow-elegant: 0 20px 50px -20px hsl(320 70% 65% / 0.35);
+    --shadow-card: 0 6px 24px -8px hsl(320 50% 50% / 0.15);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
