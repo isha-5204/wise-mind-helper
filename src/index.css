@@ -63,39 +63,39 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 230 25% 7%;
-    --foreground: 220 20% 96%;
+    --background: 285 30% 8%;
+    --foreground: 320 30% 96%;
 
-    --card: 230 22% 11%;
-    --card-foreground: 220 20% 96%;
+    --card: 285 28% 12%;
+    --card-foreground: 320 30% 96%;
 
-    --popover: 230 22% 11%;
-    --popover-foreground: 220 20% 96%;
+    --popover: 285 28% 12%;
+    --popover-foreground: 320 30% 96%;
 
-    --primary: 230 80% 65%;
-    --primary-foreground: 230 25% 7%;
-    --primary-glow: 270 85% 72%;
+    --primary: 320 80% 72%;
+    --primary-foreground: 285 30% 10%;
+    --primary-glow: 270 85% 78%;
 
-    --secondary: 230 18% 16%;
-    --secondary-foreground: 220 20% 96%;
+    --secondary: 285 22% 18%;
+    --secondary-foreground: 320 30% 96%;
 
-    --muted: 230 18% 14%;
-    --muted-foreground: 220 12% 65%;
+    --muted: 285 22% 16%;
+    --muted-foreground: 320 15% 70%;
 
-    --accent: 260 35% 22%;
-    --accent-foreground: 230 80% 80%;
+    --accent: 270 40% 25%;
+    --accent-foreground: 320 80% 85%;
 
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 220 20% 96%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 320 30% 96%;
 
-    --border: 230 18% 18%;
-    --input: 230 18% 18%;
-    --ring: 230 80% 65%;
+    --border: 285 22% 22%;
+    --input: 285 22% 22%;
+    --ring: 320 80% 72%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(230 80% 60%), hsl(270 85% 70%));
-    --gradient-subtle: linear-gradient(180deg, hsl(230 25% 7%), hsl(245 30% 10%));
-    --shadow-elegant: 0 20px 50px -20px hsl(230 80% 50% / 0.45);
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.35);
+    --gradient-hero: linear-gradient(135deg, hsl(320 80% 70%), hsl(270 80% 70%) 50%, hsl(200 85% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(285 30% 8%), hsl(300 35% 11%));
+    --shadow-elegant: 0 20px 50px -20px hsl(320 80% 60% / 0.5);
+    --shadow-card: 0 6px 24px -8px hsl(0 0% 0% / 0.4);
 
     --sidebar-background: 230 22% 9%;
     --sidebar-foreground: 220 20% 96%;
